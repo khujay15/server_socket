@@ -39,7 +39,7 @@ void* loop(void* data)
            cout<<buf<<endl;
            buf[res]='!';    //add ! at the end of buffer
 
-           if( strstr(buf,"-broadcast") != NULL )
+           if( strstr(buf,"@broadcast") != NULL )
            {
                broadcasting(buf,res);
                continue;
@@ -121,52 +121,10 @@ int main(int argc, char *argv[])
             connetion++;
     }
 
-
-
-
-    //---///
-
-//    if(listen(sd,5) == -1)
-//    {
-//        cout<<"listening"<<endl;
-//        cout<<strerror(errno)<<endl;
-//        exit(0);
-//    }
-
-//    int client_socket;
-//    sockaddr_in client_addr;
-//    int client_addr_size= sizeof(client_addr);
-//    client_socket = accept(sd,(sockaddr*)&client_addr,(socklen_t*)&client_addr_size);
-//    if(client_socket == -1)
-//    {
-//        cout<<"client conneting fail"<<endl;
-//        cout<<strerror(errno)<<endl;
-//    }
-//    char buf[256];
-//    while(1)
-//    {
-//        ssize_t res=recv(client_socket,buf,255,0);
-//        if(res ==-1 || res ==0)
-//        {
-//            cout<<"receive fail"<<endl;
-//            break;
-//        }
-//        buf[res]='\0';
-//        cout<<buf<<endl;
-//        if(res > 0)
-//        {
-//            if( send(client_socket,"hello!",strlen("hello!"),0) == -1)
-//            {
-//                cout<<"send error"<<endl;
-//                cout<<strerror(errno)<<endl;
-//                break;
-//            }
-//        }
-//    }
-//    close(sd);
     pthread_detach(p_thread[0]);
     pthread_detach(p_thread[1]);
     pthread_detach(p_thread[2]);
     pthread_detach(p_thread[3]);
+    close(sd);
     return 0;
 }
