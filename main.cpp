@@ -9,15 +9,18 @@
 #include <pthread.h>
 
 using namespace std;
-
+pthread_mutex_t connect_mutex;
 int connetion=0;
 int client_socket[4];
 
 
 void broadcasting(char* buf,int res)
 {
+    pthread_mutex_lock(&connect_mutex);
     for(int i=0; i < connetion; i++)
         send(client_socket[i],buf,res+1,0);
+    pthread_mutex_unlock(&connect_mutex);
+
 }
 
 
@@ -118,7 +121,11 @@ int main(int argc, char *argv[])
            exit(1);
         }
         else
+        {
+            pthread_mutex_lock(&connect_mutex);
             connetion++;
+            pthread_mutex_unlock(&connect_mutex);
+        }
     }
 
     pthread_detach(p_thread[0]);
